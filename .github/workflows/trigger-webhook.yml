@@ -1,0 +1,15 @@
+name: Trigger Webhook on Push
+
+on:
+  push:
+    branches: [ main ]  # 指定触发分支
+
+jobs:
+  send-webhook:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Send POST request to webhook
+      run: |
+        curl -X POST \
+          "http://${{ secrets.WEBHOOK_IP }}/webhook-endpoint" \
+          -H "Authorization: Bearer ${{ secrets.WEBHOOK_TOKEN }}"
